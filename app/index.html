@@ -109,35 +109,46 @@ The algorithm of the function below was derived from Zeller's Algorithm.
 The function determines the day of the week a user was born on, based on the date of birth given by the user
 */
 
-function calculateDay(month, year, day){ 
+function calculateDay(month, year, day){   
 var yearOfcentury, century, w, x, y, z, dayOfbirth;   
 if (month == 1 | month == 2){ //if month is 'January' or 'February'
-  newMonth = month + 10;
+  newMonth = 1*month + 10;
   newYear = year - 1;
+  console.log("New month "+ month);
 }
 else{ //if month is any but 'January' or 'February'
   newMonth = month - 2;
   newYear = year;
 }
 newDay = day;
-yearOfcentury = mod(newYear , 100); // year of the century
-century = newYear / 100;
-w = (13 * newMonth - 1) / 5;
-x = yearOfcentury / 4;
-y = century / 4;
-z = w + x + y + newDay + yearOfcentury - 2 * century;
+yearOfcentury = newYear % 100; // year of the century
+century = Math.floor(newYear / 100);
+w = Math.floor((13 * newMonth - 1) / 5);
+x = Math.floor(yearOfcentury / 4);
+y = Math.floor(century / 4);
+z = 1*w + 1*x + 1*y + 1*newDay + 1*yearOfcentury - 2 * century;
 
-dayOfbirth = mod(z , 7); // where 0 is Sunday, 1 is Monday, 2 is Tuesday, 3 is Wednesday, 4 is Thursday, 5 is Friday, 6 is Saturday.
+dayOfbirth = z % 7; // where 0 is Sunday, 1 is Monday, 2 is Tuesday, 3 is Wednesday, 4 is Thursday, 5 is Friday, 6 is Saturday.
+console.log("This is the day " + dayOfbirth);
+return Math.floor(dayOfbirth);
 }
 
 function dayName(){
-var month = getElementByID({{month}});
-var year = getElementByID({{year}});
-var day = getElementByID({{day}});
+var month = document.getElementsByClassName("form-control")[0];
+var year = document.getElementsByClassName("form-control")[2];
+var day = document.getElementsByClassName("form-control")[1];
+var genderFemale = document.getElementById("gender");
+var gen;
+(genderFemale.checked)?gen = 'female':gen = 'male';
 
-var dob = calculate(month, year, day);
+var dob = calculateDay(month.value, year.value, day.value);
+console.log(month.value +"|"+ 
+  year.value +"|"+
+  day.value +"|"+ 
+  gen +"|"+
+  dob);
 if (dob == 0) {
-  if (gender = 'Male'){
+  if (gen == 'male'){
   return 'Kwesi';
   }
   else {
@@ -146,7 +157,7 @@ if (dob == 0) {
 }
 
 else if (dob == 1) {
-  if (gender = 'Male'){
+  if (gen == 'male'){
   return 'Kwadwo';
   }
   else {
@@ -155,7 +166,7 @@ else if (dob == 1) {
 }
 
 else if (dob == 2) {
-  if (gender = 'Male'){
+  if (gen == 'male'){
   return 'Kwabena';
   }
   else {
@@ -164,7 +175,7 @@ else if (dob == 2) {
 }
 
 else if (dob == 3) {
-  if (gender = 'Male'){
+  if (gen == 'male'){
   return 'Kwaku';
   }
   else {
@@ -173,7 +184,7 @@ else if (dob == 3) {
 }
 
 else if (dob == 4) {
-  if (gender = 'Male'){
+  if (gen == 'male'){
   return 'Yaw';
   }
   else {
@@ -182,7 +193,7 @@ else if (dob == 4) {
 }
 
 else if (dob == 5) {
-  if (gender = 'Male'){
+  if (gen  == 'male'){
   return 'Kofi';
   }
   else {
@@ -191,13 +202,19 @@ else if (dob == 5) {
 }
 
 else if (dob == 6) {
-  if (gender = 'Male'){
+  if (gen == 'male'){
   return 'Kwame';
   }
   else {
   return 'Ama';
   }
 }
+}
+
+function test(){
+  var gender = document.getElementById("answer");
+  gender.innerHTML = "Hi there! Your Akan name is "+ dayName();
+  console.log(dayName());
 }
   </script>
   <!-- In production use:
@@ -232,11 +249,13 @@ else if (dob == 6) {
             <input class="form-control" type="text" data-ng-model="year"/>
           </div><br/>
           <div class="input-group">
-            <input type="radio" value="female" data-ng-model="gender"/> Female<br/>
-            <input type="radio" value="male"data-ng-model="gender"/> Male
+            <input type="radio"  checked="checked" id="gender" name="gender" value="female" /> Female<br/>
+            <input type="radio"  name="gender" value="male" /> Male
           </div><br/>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="test()">Submit</button>
         </form>
+
+        <div id="answer"></div>
       </div>
       <div class="col-md-4">
       </div>
