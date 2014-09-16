@@ -109,6 +109,7 @@
     The function determines the day of the week a user was born on, based on the date of birth given by the user
     */
 
+<<<<<<< HEAD
     function calculateDay(month, year, day){ 
       var yearOfcentury, century, w, x, y, z, dayOfbirth;   
       if (month == 1 | month == 2){ //if month is 'January' or 'February'
@@ -199,6 +200,115 @@
         }
       }
     }
+=======
+function calculateDay(month, year, day){   
+var yearOfcentury, century, w, x, y, z, dayOfbirth;   
+if (month == 1 | month == 2){ //if month is 'January' or 'February'
+  newMonth = 1*month + 10;
+  newYear = year - 1;
+  console.log("New month "+ month);
+}
+else{ //if month is any but 'January' or 'February'
+  newMonth = month - 2;
+  newYear = year;
+}
+newDay = day;
+yearOfcentury = newYear % 100; // year of the century
+century = Math.floor(newYear / 100);
+w = Math.floor((13 * newMonth - 1) / 5);
+x = Math.floor(yearOfcentury / 4);
+y = Math.floor(century / 4);
+z = 1*w + 1*x + 1*y + 1*newDay + 1*yearOfcentury - 2 * century;
+
+dayOfbirth = z % 7; // where 0 is Sunday, 1 is Monday, 2 is Tuesday, 3 is Wednesday, 4 is Thursday, 5 is Friday, 6 is Saturday.
+console.log("This is the day " + dayOfbirth);
+return Math.floor(dayOfbirth);
+}
+
+function dayName(){
+var month = document.getElementsByClassName("form-control")[0];
+var year = document.getElementsByClassName("form-control")[2];
+var day = document.getElementsByClassName("form-control")[1];
+var genderFemale = document.getElementById("gender");
+var gen;
+(genderFemale.checked)?gen = 'female':gen = 'male';
+
+var dob = calculateDay(month.value, year.value, day.value);
+console.log(month.value +"|"+ 
+  year.value +"|"+
+  day.value +"|"+ 
+  gen +"|"+
+  dob);
+if (dob == 0) {
+  if (gen == 'male'){
+  return 'Kwesi';
+  }
+  else {
+  return 'Akosua';
+  }
+}
+
+else if (dob == 1) {
+  if (gen == 'male'){
+  return 'Kwadwo';
+  }
+  else {
+  return 'Adwoa';
+  }
+}
+
+else if (dob == 2) {
+  if (gen == 'male'){
+  return 'Kwabena';
+  }
+  else {
+  return 'Abena';
+  }
+}
+
+else if (dob == 3) {
+  if (gen == 'male'){
+  return 'Kwaku';
+  }
+  else {
+  return 'Akua';
+  }
+}
+
+else if (dob == 4) {
+  if (gen == 'male'){
+  return 'Yaw';
+  }
+  else {
+  return 'Yaa';
+  }
+}
+
+else if (dob == 5) {
+  if (gen  == 'male'){
+  return 'Kofi';
+  }
+  else {
+  return 'Afia';
+  }
+}
+
+else if (dob == 6) {
+  if (gen == 'male'){
+  return 'Kwame';
+  }
+  else {
+  return 'Ama';
+  }
+}
+}
+
+function test(){
+  var gender = document.getElementById("answer");
+  gender.innerHTML = "Hi there! Your Akan name is "+ dayName();
+  console.log(dayName());
+}
+>>>>>>> a99b37ead138c9912791c2201ac58aa863d8312e
   </script>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -232,11 +342,13 @@
             <input class="form-control" type="text" data-ng-model="year"/>
           </div><br/>
           <div class="input-group">
-            <input type="radio" value="female" data-ng-model="gender"/> Female<br/>
-            <input type="radio" value="male"data-ng-model="gender"/> Male
+            <input type="radio"  checked="checked" id="gender" name="gender" value="female" /> Female<br/>
+            <input type="radio"  name="gender" value="male" /> Male
           </div><br/>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="test()">Submit</button>
         </form>
+
+        <div id="answer"></div>
       </div>
       <div class="col-md-4">
       </div>
