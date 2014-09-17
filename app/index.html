@@ -142,11 +142,6 @@ var gen;
 (genderFemale.checked)?gen = 'female':gen = 'male';
 
 var dob = calculateDay(month.value, year.value, day.value);
-console.log(month.value +"|"+ 
-  year.value +"|"+
-  day.value +"|"+ 
-  gen +"|"+
-  dob);
 if (dob == 0) {
   if (gen == 'male'){
   return 'Kwesi';
