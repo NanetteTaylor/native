@@ -93,6 +93,43 @@
         console.log('Successful login for: ' + response.name);
         document.getElementById('status').innerHTML =
           'Thanks for logging in, ' + response.name + '!';
+          console.log("birthday is " + response.birthday + " gender is " + response.gender)
+          var birthday = response.birthday.split("/");
+          var user_gender = response.gender;
+          var birthday_month = birthday[0];
+          var birthday_day = birthday[1];
+          var birthday_year = birthday[2];
+          //document.getElementById('testing').innerHTML = "Month="+birthday_month+" Day="+birthday_day+" Year="+birthday_year;
+          var options = document.getElementById("selectMonth").options;
+          var n;
+          for (n = 0; n < options.length; ++n) {
+              if (options[n].value === birthday_month) {
+                  options[n].defaultSelected = true;
+                  break;
+              }
+          }
+          var options = document.getElementById("selectDay").options;
+          for (n = 0; n < options.length; ++n) {
+              if (options[n].value === birthday_day) {
+                  options[n].defaultSelected = true;
+                  break;
+              }
+          }
+          document.getElementById("selectYear").value = birthday_year;
+          if (user_gender === "male"){
+            document.getElementById("maleGender").checked = true;
+            document.getElementById("femaleGender").checked = false;
+          }
+          else{
+            document.getElementById("femaleGender").checked = true;
+            document.getElementById("maleGender").checked = false;
+          }
+
+          var akanName = dayName(birthday_month, birthday_year, birthday_day, user_gender);
+          var gender = document.getElementById("answer");
+          gender.innerHTML = "Hi there! Your Akan name is "+ akanName;
+          console.log(akanName);
+
       });
     }
   </script>
@@ -105,42 +142,48 @@
     }
 
     /*
-The algorithm of the function below was derived from Zeller's Algorithm.
-The function determines the day of the week a user was born on, based on the date of birth given by the user
-*/
+    The algorithm of the function below was derived from Zeller's Algorithm.
+    The function determines the day of the week a user was born on, based on the date of birth given by the user
+    */
 
-function calculateDay(month, year, day){   
-var yearOfcentury, century, w, x, y, z, dayOfbirth;   
-if (month == 1 | month == 2){ //if month is 'January' or 'February'
-  newMonth = 1*month + 10;
-  newYear = year - 1;
-  console.log("New month "+ month);
-}
-else{ //if month is any but 'January' or 'February'
-  newMonth = month - 2;
-  newYear = year;
-}
-newDay = day;
-yearOfcentury = newYear % 100; // year of the century
-century = Math.floor(newYear / 100);
-w = Math.floor((13 * newMonth - 1) / 5);
-x = Math.floor(yearOfcentury / 4);
-y = Math.floor(century / 4);
-z = 1*w + 1*x + 1*y + 1*newDay + 1*yearOfcentury - 2 * century;
 
-dayOfbirth = z % 7; // where 0 is Sunday, 1 is Monday, 2 is Tuesday, 3 is Wednesday, 4 is Thursday, 5 is Friday, 6 is Saturday.
-console.log("This is the day " + dayOfbirth);
-return Math.floor(dayOfbirth);
-}
+    function calculateDay(month, year, day){   
+    var yearOfcentury, century, w, x, y, z, dayOfbirth;   
+    if (month == 1 | month == 2){ //if month is 'January' or 'February'
+      newMonth = 1*month + 10;
+      newYear = year - 1;
+      console.log("New month "+ month);
+    }
+    else{ //if month is any but 'January' or 'February'
+      newMonth = month - 2;
+      newYear = year;
+    }
+    newDay = day;
+    yearOfcentury = newYear % 100; // year of the century
+    century = Math.floor(newYear / 100);
+    w = Math.floor((13 * newMonth - 1) / 5);
+    x = Math.floor(yearOfcentury / 4);
+    y = Math.floor(century / 4);
+    z = 1*w + 1*x + 1*y + 1*newDay + 1*yearOfcentury - 2 * century;
 
-function dayName(){
-var month = document.getElementsByClassName("form-control")[0];
-var year = document.getElementsByClassName("form-control")[2];
-var day = document.getElementsByClassName("form-control")[1];
-var genderFemale = document.getElementById("gender");
-var gen;
-(genderFemale.checked)?gen = 'female':gen = 'male';
+    dayOfbirth = z % 7; // where 0 is Sunday, 1 is Monday, 2 is Tuesday, 3 is Wednesday, 4 is Thursday, 5 is Friday, 6 is Saturday.
+    console.log("This is the day " + dayOfbirth);
+    return Math.floor(dayOfbirth);
+    }
 
+    function submitDayName(){
+      var month = document.getElementsByClassName("form-control")[0].value;
+      var year = document.getElementsByClassName("form-control")[2].value;
+      var day = document.getElementsByClassName("form-control")[1].value;
+      var genderFemale = document.getElementById("maleGender");
+      var gen;
+      (genderFemale.checked)?gen = 'male':gen = 'female';
+      
+      //document.getElementById("testing").innerHTML = "Month="+month+" year="+year+" day="+day+" gen="+gen;
+      return dayName(month,year,day,gen);
+    }
+
+<<<<<<< HEAD
 var dob = calculateDay(month.value, year.value, day.value);
 if (dob == 0) {
   if (gen == 'male'){
@@ -150,67 +193,81 @@ if (dob == 0) {
   return 'Akosua';
   }
 }
+=======
+    function dayName(month,year,day,gen){
+    //document.getElementById("testing").innerHTML = "Month="+month+" year="+year+" day="+day+" gen="+gen;
+    var dob = calculateDay(month, year, day);
+    if (dob == 0) {
+      if (gen == 'male'){
+      return 'Kwesi';
+      }
+      else {
+      return 'Akosua';
+      }
+    }
+>>>>>>> 76018279c1d9cf4245feeae40cc87fa0d02e056a
 
-else if (dob == 1) {
-  if (gen == 'male'){
-  return 'Kwadwo';
-  }
-  else {
-  return 'Adwoa';
-  }
-}
+    else if (dob == 1) {
+      if (gen == 'male'){
+      return 'Kwadwo';
+      }
+      else {
+      return 'Adwoa';
+      }
+    }
 
-else if (dob == 2) {
-  if (gen == 'male'){
-  return 'Kwabena';
-  }
-  else {
-  return 'Abena';
-  }
-}
+    else if (dob == 2) {
+      if (gen == 'male'){
+      return 'Kwabena';
+      }
+      else {
+      return 'Abena';
+      }
+    }
 
-else if (dob == 3) {
-  if (gen == 'male'){
-  return 'Kwaku';
-  }
-  else {
-  return 'Akua';
-  }
-}
+    else if (dob == 3) {
+      if (gen == 'male'){
+      return 'Kwaku';
+      }
+      else {
+      return 'Akua';
+      }
+    }
 
-else if (dob == 4) {
-  if (gen == 'male'){
-  return 'Yaw';
-  }
-  else {
-  return 'Yaa';
-  }
-}
+    else if (dob == 4) {
+      if (gen == 'male'){
+      return 'Yaw';
+      }
+      else {
+      return 'Yaa';
+      }
+    }
 
-else if (dob == 5) {
-  if (gen  == 'male'){
-  return 'Kofi';
-  }
-  else {
-  return 'Afia';
-  }
-}
+    else if (dob == 5) {
+      if (gen  == 'male'){
+      return 'Kofi';
+      }
+      else {
+      return 'Afia';
+      }
+    }
 
-else if (dob == 6) {
-  if (gen == 'male'){
-  return 'Kwame';
-  }
-  else {
-  return 'Ama';
-  }
-}
-}
+    else if (dob == 6) {
+      if (gen == 'male'){
+      return 'Kwame';
+      }
+      else {
+      return 'Ama';
+      }
+    }
+    }
 
-function test(){
-  var gender = document.getElementById("answer");
-  gender.innerHTML = "Hi there! Your Akan name is "+ dayName();
-  console.log(dayName());
-}
+    function test(){
+      var dayName = submitDayName();
+      var gender = document.getElementById("answer");
+      gender.innerHTML = "Hi there! Your Akan day name is "+ dayName;
+      console.log(dayName);
+    }
   </script>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -219,6 +276,11 @@ function test(){
   <div class="container">
     <div class="row" data-ng-controller="DataController">
       <div class="col-md-4">
+        <br/>
+        <br/>
+        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        </fb:login-button>
+        <div id="status"></div>
       </div>
       <div class="col-md-4">
         <center><h2>Enter your birth date</h2></center>
@@ -229,28 +291,30 @@ function test(){
         <form class="form">
           <div class="input-group">
             <span class="input-group-addon">Month</span>
-            <select class="form-control">
+            <select id="selectMonth" class="form-control">
               <option data-ng-repeat="month in months">{{month}}</option>
             </select>
           </div><br/>
           <div class="input-group">
             <span class="input-group-addon">Day</span>
-            <select class="form-control">
+            <select id="selectDay" class="form-control">
               <option data-ng-repeat="day in days">{{day}}</option>
             </select>
           </div><br/>
           <div class="input-group">
             <span class="input-group-addon">Year</span>
-            <input class="form-control" type="text" data-ng-model="year"/>
+            <input id="selectYear" class="form-control" type="text" data-ng-model="year"/>
           </div><br/>
           <div class="input-group">
-            <input type="radio"  checked="checked" id="gender" name="gender" value="female" /> Female<br/>
-            <input type="radio"  name="gender" value="male" /> Male
+            <input type="radio" id="femaleGender" name="gender" value="female" /> Female<br/>
+            <input type="radio" checked="checked" id="maleGender" name="gender" value="male" /> Male
           </div><br/>
           <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="test()">Submit</button>
         </form>
-
-        <div id="answer"></div>
+        <br/>
+        <br/>
+        <h3 id="answer"></h3><br/>
+        <!-- <div id="testing"></div> -->
       </div>
       <div class="col-md-4">
       </div>
@@ -258,11 +322,11 @@ function test(){
   </div>
 
 
-  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+  <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
   </fb:login-button>
 
   <div id="status">
-  </div>
+  </div> -->
 
 
   <script src="bower_components/angular/angular.js"></script>
