@@ -175,25 +175,14 @@
       var month = document.getElementsByClassName("form-control")[0].value;
       var year = document.getElementsByClassName("form-control")[2].value;
       var day = document.getElementsByClassName("form-control")[1].value;
-      var genderFemale = document.getElementById("maleGender");
+      var genderMale = document.getElementById("maleGender");
       var gen;
-      (genderFemale.checked)?gen = 'male':gen = 'female';
+      (genderMale.checked)?gen = 'male':gen = 'female';
       
       //document.getElementById("testing").innerHTML = "Month="+month+" year="+year+" day="+day+" gen="+gen;
       return dayName(month,year,day,gen);
     }
 
-<<<<<<< HEAD
-var dob = calculateDay(month.value, year.value, day.value);
-if (dob == 0) {
-  if (gen == 'male'){
-  return 'Kwesi';
-  }
-  else {
-  return 'Akosua';
-  }
-}
-=======
     function dayName(month,year,day,gen){
     //document.getElementById("testing").innerHTML = "Month="+month+" year="+year+" day="+day+" gen="+gen;
     var dob = calculateDay(month, year, day);
@@ -205,7 +194,6 @@ if (dob == 0) {
       return 'Akosua';
       }
     }
->>>>>>> 76018279c1d9cf4245feeae40cc87fa0d02e056a
 
     else if (dob == 1) {
       if (gen == 'male'){
@@ -306,8 +294,8 @@ if (dob == 0) {
             <input id="selectYear" class="form-control" type="text" data-ng-model="year"/>
           </div><br/>
           <div class="input-group">
-            <input type="radio" id="femaleGender" name="gender" value="female" /> Female<br/>
-            <input type="radio" checked="checked" id="maleGender" name="gender" value="male" /> Male
+            <input type="radio" checked="checked" id="maleGender" name="gender" value="male" /> Male<br/>
+            <input type="radio" id="femaleGender" name="gender" value="female" /> Female
           </div><br/>
           <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="test()">Submit</button>
         </form>
