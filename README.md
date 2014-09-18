@@ -1,4 +1,4 @@
-# Native — A web application display Akan day names based on birthdates and gender
+# Native — A web application that displays Akan day names based on birth dates and gender
 
 This project was developed as part of an assingment for a Software Engineering(2014) class in Ashesi University College.
 
