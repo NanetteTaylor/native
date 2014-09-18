@@ -1,6 +1,6 @@
 # Native — A web application that displays Akan day names based on birth dates and gender
 
-This project was developed as part of an assingment for a Software Engineering(2014) class in Ashesi University College.
+This project was developed as part of an assingment for the 2014 Software Engineering class in Ashesi University College.
 
 The app has a Facebook login feature which allows the user to login and shows the user's Akan day name based on their public information on Facebook. The app uses Zellers algorithm in determining the day of the week the person was born on.
 
